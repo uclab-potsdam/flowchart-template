@@ -1,11 +1,11 @@
 {
-    "id": "flowchart-template",
-    "title": "Flowchart Template",
-    "subtitle": "Navigating and narrating complexity through exploration and storytelling",
+    "id": "flowchart-foreigners-everywhere-we-should-travel-a-lot-more",
+    "title": "Wir sollten viel mehr reisen!",
+    "subtitle": "Flowchart zur Erkundung und Reflektion zum Thema \"Fremde überall\" anlässlich der 60. Kunst-Biennale in Venedig 2024",
     "colors": {
-        "background-color": "#F2EEE6",
-        "intro-background-color": "#FFFDFA",
-        "text-color": "#4D5B80",
-        "accent-color": "#1C9E9E"
+        "background-color": "#0C0326",
+        "intro-background-color": "#211838",
+        "text-color": "#FDFDFD",
+        "accent-color": "#1252AD"
     }
 }
