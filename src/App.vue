@@ -1,4 +1,5 @@
 <template>
+  <!-- todo: reactivate when adding narration.mp3
   <audio
     ref="media"
     @loadedmetadata="flowchartStore.playbackDuration = $event.target.duration"
@@ -14,28 +15,29 @@
       @error="flowchartStore.narrationEnabled = false"
     />
   </audio>
+  -->
   <TheFlowchart
-    v-if="flowchartStore.currentNarrationNodeId"
-    @setCurrentNodeId="setCurrentNodeId"
-    @jumpNarrationToNode="jumpNarrationToNode"
-    @startPlayback="startPlayback"
-    @startExplorationDuringPlayback="startExplorationDuringPlayback()"
-    @stopExplorationDuringPlayback="stopExplorationDuringPlayback()"
-    @toggleIntroPanel="toggleIntroPanel"
-    @mousedown="toggleIntroPanel(true)"
+      v-if="flowchartStore.currentNarrationNodeId"
+      @setCurrentNodeId="setCurrentNodeId"
+      @jumpNarrationToNode="jumpNarrationToNode"
+      @startPlayback="startPlayback"
+      @startExplorationDuringPlayback="startExplorationDuringPlayback()"
+      @stopExplorationDuringPlayback="stopExplorationDuringPlayback()"
+      @toggleIntroPanel="toggleIntroPanel"
+      @mousedown="toggleIntroPanel(true)"
   />
   <TheIntroPanel
-    :siteTitle="userSetup.title"
-    :siteSubtitle="userSetup.subtitle"
-    @togglePlayback="togglePlayback()"
-    @toggleIntroPanel="toggleIntroPanel()"
+      :siteTitle="userSetup.title"
+      :siteSubtitle="userSetup.subtitle"
+      @togglePlayback="togglePlayback()"
+      @toggleIntroPanel="toggleIntroPanel()"
   />
   <ThePlaybackControls
-    v-if="flowchartStore.narrationEnabled && flowchartStore.currentNarrationNodeId"
-    :class="{ 'dark-scheme': this.darkScheme }"
-    @jumpNarrationToNode="jumpNarrationToNode"
-    @togglePlayback="togglePlayback()"
-    @stopExplorationDuringPlayback="stopExplorationDuringPlayback()"
+      v-if="flowchartStore.narrationEnabled && flowchartStore.currentNarrationNodeId"
+      :class="{ 'dark-scheme': this.darkScheme }"
+      @jumpNarrationToNode="jumpNarrationToNode"
+      @togglePlayback="togglePlayback()"
+      @stopExplorationDuringPlayback="stopExplorationDuringPlayback()"
   />
 </template>
 
@@ -75,8 +77,8 @@ export default {
 
   computed: {
     ...mapStores(
-      useFlowchartStore,
-      useViewStore
+        useFlowchartStore,
+        useViewStore
     )
   },
 
@@ -90,12 +92,12 @@ export default {
     // fetch and apply user setup from public JSON file
     async fetchUserSetup() {
       fetch('setup.json')
-        .then(response => response.json())
-        .then(data => {
-          this.userSetup = data;
-          this.applyUserSetup();
-        })
-        .catch(error => console.log(error));
+          .then(response => response.json())
+          .then(data => {
+            this.userSetup = data;
+            this.applyUserSetup();
+          })
+          .catch(error => console.log(error));
     },
     applyUserSetup() {
       this.flowchartStore.flowchartId = this.userSetup.id;
@@ -134,7 +136,7 @@ export default {
             const lastNodeOccurrence = nodeOccurrencesInNarration[nodeOccurrencesInNarration.length - 1];
             this.setPlaybackPosition(lastNodeOccurrence[0]);
           }
-        // if playback is paused, jump to the first unlistened occurrence in narration sequence or the final one if none exists
+          // if playback is paused, jump to the first unlistened occurrence in narration sequence or the final one if none exists
         } else {
           let furthestNodeOccurrence = [0, ''];
 
@@ -172,7 +174,7 @@ export default {
       if (!nodeIdAlreadySet) {
         this.setCurrentNodeId(this.flowchartStore.currentNarrationNodeId);
       }
-      
+
       this.$refs.media.play();
       this.flowchartStore.playbackActive = true;
       this.requestWakeLock();
@@ -237,9 +239,9 @@ export default {
     isDarkColor(hex) {
       const rgb = this.hexToRgb(hex).split(',');
       const hsp = Math.sqrt(
-        0.299 * (rgb[0] * rgb[0]) +
-        0.587 * (rgb[1] * rgb[1]) +
-        0.114 * (rgb[2] * rgb[2])
+          0.299 * (rgb[0] * rgb[0]) +
+          0.587 * (rgb[1] * rgb[1]) +
+          0.114 * (rgb[2] * rgb[2])
       );
 
       return hsp > 127.5 ? false : true;
@@ -258,6 +260,9 @@ export default {
 
   created() {
     this.fetchUserSetup();
+
+    //toDo: remove when adding narration.mp3 again
+    this.flowchartStore.narrationEnabled = false;
 
     // set wakeLockSupported if supported
     if ('wakeLock' in navigator) {
